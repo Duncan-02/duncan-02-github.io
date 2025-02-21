@@ -119,7 +119,7 @@ echo "image:"
 echo "optimized_image:"
 echo "category:"
 echo "tags:"
-echo "author:"
+echo "author: Duncan"
 echo "paginate: false"
 echo "---"
 
