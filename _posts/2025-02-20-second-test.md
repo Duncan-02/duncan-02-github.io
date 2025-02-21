@@ -10,7 +10,7 @@ category: nature
 tags:
   - nature
   - snow
-author: mranderson
+author: Duncan
 paginate: false
 ---
 
