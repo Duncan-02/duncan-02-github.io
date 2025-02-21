@@ -1,13 +1,17 @@
 ---
-date: 2025-02-20 23:14:34
+date: 2025-02-21 21:35:34
 layout: post
-title: "New post title"
-subtitle:
-description:
-image:
-optimized_image:
-category:
+title: Test 2
+subtitle: A snowy mountain
+description: Second test with an image of a snowy mountain.
+image: https://cdn.pixabay.com/photo/2025/01/27/21/11/mountain-9364160_640.jpg
+optimized_image: https://cdn.pixabay.com/photo/2025/01/27/21/11/mountain-9364160_960_720.jpg
+category: nature
 tags:
-author:
+  - nature
+  - snow
+author: mranderson
 paginate: false
 ---
+
+This is my second attempt on updating a post to show something.
