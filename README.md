@@ -211,14 +211,6 @@ Use the [Front Matter properties](docs/post.md#front-matter-properties) to creat
 
 File a [GitHub issue](https://github.com/thiagorossener/jekflix-template/issues/new) please.
 
-## Author
-
-[Thiago Rossener](https://rossener.com/)
-
-Do you like my work? Buy me a coffee!
-
-<a href="https://www.buymeacoffee.com/thiagorossener" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
-
 ## License
 
 *Jekflix Template* is available under the MIT license. See the [LICENSE](https://github.com/thiagorossener/jekflix-template/blob/master/LICENSE) file for more info.
