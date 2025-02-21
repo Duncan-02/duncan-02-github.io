@@ -1,6 +1,6 @@
 ---
 layout: category
-title: Work
-slug: work
-description: A category for work related posts.
+title: Nature
+slug: nature
+description: A category for nature related posts.
 ---
