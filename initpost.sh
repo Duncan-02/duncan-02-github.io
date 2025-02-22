@@ -63,7 +63,8 @@ fi
 
 if [ -n "$CATEGORY" ]; then
     echo "category: \"$CATEGORY\""
-    echo "tags: [\"$CATEGORY\"]"
+    echo "tags:"
+    echo "  - \"$CATEGORY\""
 else
     echo "tags: []"
 fi
