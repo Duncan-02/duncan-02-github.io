@@ -1,13 +1,12 @@
-name: Jekflix
-title: Jekflix | A blog theme for Jekyll
-description: Jekflix is a template for Jekyll inspired by Netflix and made by
-  Thiago Rossener.
+name: Duncan.wf
+title: Duncan.wf | my website
+description:  Duncan.wf is an attempt to make a working website to share images with my friends.
 tags:
-  - blog
-  - template
-  - jekyll
-  - theme
-  - netlify
+  - Duncan
+  - website
+  - memes
+  - images
+  - posts
 show_hero: true
 menu:
   - title: Home
@@ -23,4 +22,4 @@ email: youremail@test.com
 disqus_username: disqus_username
 # Contact Form Setting
 # See: https://formspree.io/
-formspree_form_id: formspree_form_id
+formspree_form_id: "xzzdogzk"
