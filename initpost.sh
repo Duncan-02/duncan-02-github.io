@@ -63,10 +63,12 @@ fi
 
 if [ -n "$CATEGORY" ]; then
     echo "category: \"$CATEGORY\""
+    echo "tags: [\"$CATEGORY\"]"
+else
+    echo "tags: []"
 fi
 
 cat <<EOT
-tags: []
 author: ""
 paginate: false
 ---
