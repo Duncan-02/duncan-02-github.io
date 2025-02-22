@@ -1,164 +1,107 @@
 #!/usr/bin/env bash
 
 # ------------------------------------------------------------------------------
-#
 # Program: initpost.sh
-# Author:  Vitor Britto
-# Description: script to create an initial structure for my posts.
+# Author:  Vitor Britto (Modified for optional parameters)
+# Description: Script to create an initial structure for blog posts.
 #
-# Usage: ./initpost.sh [options] <post name>
-#
-# Options:
-#   -h, --help        output instructions
-#   -c, --create      create post
-#
-# Alias: alias newpost="bash ~/path/to/script/initpost.sh"
-#
-# Example:
-#   ./initpost.sh -c How to replace strings with sed
-#
-# Important Notes:
-#   - This script was created to generate new markdown files for my blog.
+# Usage: ./initpost.sh -c "Title" ["Image URL"] ["Category"]
 #
 # ------------------------------------------------------------------------------
 
+# CORE VARIABLES
+TITLE="$2"         # Post title (required)
+IMAGE="${3:-}"     # Image URL (optional)
+CATEGORY="${4:-}"  # Category (optional)
 
-# ------------------------------------------------------------------------------
-# | VARIABLES                                                                  |
-# ------------------------------------------------------------------------------
-
-# CORE: Do not change these lines
-# ----------------------------------------------------------------
-POST_TITLE="${@:2:$(($#-1))}"
-POST_NAME="$(echo ${@:2:$(($#-1))} | sed -e 's/ /-/g' | sed "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/")"
+# Generate a clean filename from the title only
+POST_NAME="$(echo "${TITLE}" | sed -e 's/ /-/g' | sed 's/[^a-zA-Z0-9_-]//g' | tr '[:upper:]' '[:lower:]')"
 CURRENT_DATE="$(date -u +'%Y-%m-%d')"
-TIME=$(date -u +"%T")
+TIME="$(date -u +"%T")"
 FILE_NAME="${CURRENT_DATE}-${POST_NAME}.md"
-# ----------------------------------------------------------------
 
-
-# SETTINGS: your configuration goes here
-# ----------------------------------------------------------------
-
-# Set your destination folder
-BINPATH=$(cd `dirname $0`; pwd)
+# Destination folder
+BINPATH=$(cd "$(dirname "$0")"; pwd)
 POSTPATH="${BINPATH}/_posts"
 DIST_FOLDER="$POSTPATH"
 
-# Set your blog URL
-BLOG_URL="https://jekflix.rossener.com/"
+# Ensure directory exists
+mkdir -p "$DIST_FOLDER"
 
-# Set your assets URL
-ASSETS_URL="assets/img/"
-# ----------------------------------------------------------------
+# UTILS
+e_header() { printf "$(tput setaf 38)→ %s$(tput sgr0)\n" "$@"; }
+e_success() { printf "$(tput setaf 76)✔ %s$(tput sgr0)\n" "$@"; }
+e_error() { printf "$(tput setaf 1)✖ %s$(tput sgr0)\n" "$@"; }
+e_warning() { printf "$(tput setaf 3)! %s$(tput sgr0)\n" "$@"; }
 
-
-
-# ------------------------------------------------------------------------------
-# | UTILS                                                                      |
-# ------------------------------------------------------------------------------
-
-# Header logging
-e_header() {
-    printf "$(tput setaf 38)→ %s$(tput sgr0)\n" "$@"
-}
-
-# Success logging
-e_success() {
-    printf "$(tput setaf 76)✔ %s$(tput sgr0)\n" "$@"
-}
-
-# Error logging
-e_error() {
-    printf "$(tput setaf 1)✖ %s$(tput sgr0)\n" "$@"
-}
-
-# Warning logging
-e_warning() {
-    printf "$(tput setaf 3)! %s$(tput sgr0)\n" "$@"
-}
-
-
-
-# ------------------------------------------------------------------------------
-# | MAIN FUNCTIONS                                                             |
-# ------------------------------------------------------------------------------
-
-# Everybody need some help
+# Help Function
 initpost_help() {
-
 cat <<EOT
-------------------------------------------------------------------------------
-INIT POST - A shortcut to create an initial structure for my posts.
-------------------------------------------------------------------------------
-Usage: ./initpost.sh [options] <post name>
-Options:
-  -h, --help        output instructions
-  -c, --create      create post
-Example:
-  ./initpost.sh -c How to replace strings with sed
-Important Notes:
-  - This script was created to generate new text files to my blog.
-Copyright (c) Vitor Britto
-Licensed under the MIT license.
-------------------------------------------------------------------------------
+Usage: ./initpost.sh -c "Title" ["Image URL"] ["Category"]
+Examples:
+  ./initpost.sh -c "My New Post" "image.jpg" "Technology"
+  ./initpost.sh -c "Post Without Image" "" "Science"
+  ./initpost.sh -c "Post Without Image and Category"
+EOT
+}
+
+# Post Content Template
+initpost_content() {
+cat <<EOT
+---
+date: ${CURRENT_DATE} ${TIME}
+layout: post
+title: "${TITLE}"
+subtitle: ""
+description: ""
 EOT
 
+if [ -n "$IMAGE" ]; then
+    echo "image: \"$IMAGE\""
+    echo "optimized_image: \"$IMAGE\""
+fi
+
+if [ -n "$CATEGORY" ]; then
+    echo "category: \"$CATEGORY\""
+fi
+
+cat <<EOT
+tags: []
+author: ""
+paginate: false
+---
+EOT
 }
 
-# Initial Content
-initpost_content() {
-
-echo "---"
-echo "date: ${CURRENT_DATE} ${TIME}"
-echo "layout: post"
-echo "title: \"${POST_TITLE}\""
-echo "subtitle:"
-echo "description:"
-echo "image:"
-echo "optimized_image:"
-echo "category:"
-echo "tags:"
-echo "author: Duncan"
-echo "paginate: false"
-echo "---"
-
-}
-
-# Create file
+# Create File
 initpost_file() {
-    if [ ! -f "$FILE_NAME" ]; then
+    FULL_PATH="${DIST_FOLDER}/${FILE_NAME}"
+    if [ ! -f "$FULL_PATH" ]; then
         e_header "Creating template..."
-        initpost_content > "${DIST_FOLDER}/${FILE_NAME}"
-        e_success "Initial post successfully created!"
+        initpost_content > "$FULL_PATH"
+        e_success "Post successfully created: ${FULL_PATH}"
     else
-        e_warning "File already exist."
+        e_warning "File already exists: ${FULL_PATH}"
         exit 1
     fi
-
 }
 
-
-
-# ------------------------------------------------------------------------------
-# | INITIALIZE PROGRAM                                                         |
-# ------------------------------------------------------------------------------
-
+# Main Function
 main() {
-
-    # Show help
-    if [[ "${1}" == "-h" || "${1}" == "--help" ]]; then
-        initpost_help ${1}
+    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        initpost_help
         exit
     fi
 
-    # Create
-    if [[ "${1}" == "-c" || "${1}" == "--create" ]]; then
-        initpost_file $*
+    if [[ "$1" == "-c" || "$1" == "--create" ]]; then
+        if [ -z "$TITLE" ]; then
+            e_error "Error: No title provided!"
+            exit 1
+        fi
+        initpost_file
         exit
     fi
-
 }
 
-# Initialize
-main $*
+# Run
+main "$@"
