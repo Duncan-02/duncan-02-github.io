@@ -14,6 +14,7 @@ layout: page
 <div class="container">
 
   <h2>{{ site.translations.contact.title | default: "Talk to me ;)" }}</h2>
+  <p>Send me images or post to add to website. Just provide a title, subtitle and small description. Full posts are also welcomed.</p>
 
   <div id="form" class="contact-form">
     <form accept-charset="UTF-8" method="POST" action="https://formspree.io/{% if site.formspree_form_id %}f/{{ site.formspree_form_id }}{% else %}{{ site.email }}{% endif %}" v-on:submit.prevent="validateBeforeSubmit" ref="contact">
