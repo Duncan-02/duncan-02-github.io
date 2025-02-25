@@ -10,6 +10,6 @@ category: "meme"
 tags:
   - "meme"
   - food
-author: janis
+author: Janis
 paginate: false
 ---
