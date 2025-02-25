@@ -1,6 +1,6 @@
 ---
 layout: author
-photo: /assets/img/uploads/profile.png
+photo: /assets/img/uploads/janispfp.jpg
 name: Janis
 display_name: Janis
 position: Currently unemployed
